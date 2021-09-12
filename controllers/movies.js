@@ -2,6 +2,7 @@
 const Movie = require('../models/movie');
 const NotFoundError = require('../errors/NotFoundError');
 const BadRequestError = require('../errors/BadRequestError');
+const AuthError = require('../errors/AuthError');
 
 module.exports.getMovies = (req, res, next) => {
   Movie.find({})
@@ -54,11 +55,14 @@ module.exports.deleteMovie = (req, res, next) => {
     .then((movie) => {
       if (!movie) {
         throw new NotFoundError('Нет такого фильма');
+      } else if (JSON.stringify(req.user._id) === JSON.stringify(movie.owner)) {
+        Movie.findByIdAndRemove(movieId)
+          .then((result) => {
+            res.send(result);
+          });
+      } else {
+        throw new AuthError('Нельзя удалять чужие фильмы');
       }
-      Movie.findByIdAndRemove(movieId)
-        .then((result) => {
-          res.send(result);
-        });
     })
     .catch((err) => {
       if (err.name === 'CastError') {
