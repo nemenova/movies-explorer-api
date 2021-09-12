@@ -3,11 +3,6 @@ const validator = require('validator');
 const bcrypt = require('bcryptjs');
 
 const userSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    minlength: 2,
-    maxlength: 30,
-  },
   email: {
     type: String,
     required: true,
@@ -22,6 +17,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     select: false,
+  },
+  name: {
+    type: String,
+    minlength: 2,
+    maxlength: 30,
   },
 });
 function toJSON() {

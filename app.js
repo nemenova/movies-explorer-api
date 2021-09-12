@@ -6,9 +6,9 @@ const cookieParser = require('cookie-parser');
 const { Joi, celebrate, errors } = require('celebrate');
 const cors = require('cors');
 const rateLimit = require('express-rate-limit');
-const validator = require('validator');
+// const validator = require('validator');
 const userRoute = require('./routes/users');
-const cardRoute = require('./routes/cards');
+const cardRoute = require('./routes/movies');
 const { createUser, login, logout } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 const NotFoundError = require('./errors/NotFoundError');
@@ -46,13 +46,13 @@ app.use(requestLogger);
 //   }, 0);
 // });
 
-const method = (value) => {
-  const result = validator.isURL(value);
-  if (result) {
-    return value;
-  }
-  throw new Error('URL validation err');
-};
+// const method = (value) => {
+//   const result = validator.isURL(value);
+//   if (result) {
+//     return value;
+//   }
+//   throw new Error('URL validation err');
+// };
 
 app.post('/signin', celebrate({
   body: Joi.object().keys({
@@ -66,8 +66,6 @@ app.post('/signup', celebrate({
     email: Joi.string().required().email(),
     password: Joi.string().required().min(8),
     name: Joi.string().min(2).max(30),
-    about: Joi.string().min(2).max(30),
-    avatar: Joi.string().custom(method),
   }).unknown(true),
 }), createUser);
 
