@@ -8,7 +8,7 @@ const cors = require('cors');
 const rateLimit = require('express-rate-limit');
 // const validator = require('validator');
 const userRoute = require('./routes/users');
-const cardRoute = require('./routes/movies');
+const movieRoute = require('./routes/movies');
 const { createUser, login, logout } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 const NotFoundError = require('./errors/NotFoundError');
@@ -28,7 +28,7 @@ app.use(cors({
   ],
 }));
 
-mongoose.connect('mongodb://localhost:27017//bitfilmsdb', {
+mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
@@ -39,20 +39,6 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(requestLogger);
-
-// app.get('/crash-test', () => {
-//   setTimeout(() => {
-//     throw new Error('Сервер сейчас упадёт');
-//   }, 0);
-// });
-
-// const method = (value) => {
-//   const result = validator.isURL(value);
-//   if (result) {
-//     return value;
-//   }
-//   throw new Error('URL validation err');
-// };
 
 app.post('/signin', celebrate({
   body: Joi.object().keys({
@@ -74,7 +60,7 @@ app.use(auth);
 app.get('/signout', logout);
 
 app.use('/users', userRoute);
-app.use('/cards', cardRoute);
+app.use('/movies', movieRoute);
 app.use('*', () => {
   throw new NotFoundError('Запрашиваемый ресурс не найден.');
 });

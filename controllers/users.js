@@ -9,29 +9,6 @@ const UnauthorizedError = require('../errors/UnauthorizedError');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
 
-// module.exports.getUsers = (req, res, next) => {
-//   User.find({})
-//     .then((users) => res.send({ data: users }))
-//     .catch(next);
-// };
-
-// module.exports.getUserById = (req, res, next) => {
-//   User.findById(req.params.userId)
-//     .then((user) => {
-//       if (!user) {
-//         throw new NotFoundError('Нет пользователя с таким id');
-//       }
-//       res.send(user);
-//     })
-//     .catch((err) => {
-//       if (err.name === 'CastError') {
-//         throw new BadRequestError('Переданы некорректные данные');
-//       }
-//       next(err);
-//     })
-//     .catch(next);
-// };
-
 module.exports.createUser = (req, res, next) => {
   const {
     name, email, password,
@@ -90,28 +67,6 @@ module.exports.updateProfile = (req, res, next) => {
     })
     .catch(next);
 };
-
-// module.exports.updateAvatar = (req, res, next) => {
-//   const { avatar } = req.body;
-
-//   User.findByIdAndUpdate(req.user._id, { avatar }, { new: true, runValidators: true })
-//     .then((user) => {
-//       if (!user) {
-//         throw new NotFoundError('Нет пользователя с таким id');
-//       }
-//       res.send(user);
-//     })
-//     .catch((err) => {
-//       if (err.name === 'ValidationError') {
-//         throw new BadRequestError('Переданы некорректные данные');
-//       } else if (err.name === 'CastError') {
-//         throw new BadRequestError('Нет пользователя с таким id');
-//       } else {
-//         next(err);
-//       }
-//     })
-//     .catch(next);
-// };
 
 module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
