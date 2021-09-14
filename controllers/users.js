@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
@@ -88,7 +87,7 @@ module.exports.login = (req, res, next) => {
     .catch(next);
 };
 
-module.exports.logout = (req, res) => {
+module.exports.logout = (req, res, next) => {
   res.clearCookie('jwt', {
     httpOnly: true,
     sameSite: 'none',

@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 const Movie = require('../models/movie');
 const NotFoundError = require('../errors/NotFoundError');
 const BadRequestError = require('../errors/BadRequestError');

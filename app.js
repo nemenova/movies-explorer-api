@@ -6,7 +6,6 @@ const cookieParser = require('cookie-parser');
 const { Joi, celebrate, errors } = require('celebrate');
 const cors = require('cors');
 const limiter = require('./middlewares/limiter');
-// const validator = require('validator');
 const userRoute = require('./routes/users');
 const movieRoute = require('./routes/movies');
 const { createUser, login, logout } = require('./controllers/users');
