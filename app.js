@@ -5,7 +5,7 @@ const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
 const { Joi, celebrate, errors } = require('celebrate');
 const cors = require('cors');
-const rateLimit = require('express-rate-limit');
+const limiter = require('./middlewares/limiter');
 // const validator = require('validator');
 const userRoute = require('./routes/users');
 const movieRoute = require('./routes/movies');
@@ -71,10 +71,6 @@ app.use(errors());
 
 app.use(centralErrorHandler);
 
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 100,
-});
 app.set('trust proxy', 1);
 app.use(limiter);
 
