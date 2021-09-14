@@ -60,6 +60,8 @@ module.exports.updateProfile = (req, res, next) => {
         throw new BadRequestError('Переданы некорректные данные');
       } else if (err.name === 'CastError') {
         throw new BadRequestError('Нет пользователя с таким id');
+      } else if (err.name === 'MongoError' && err.code === 11000) {
+        throw new ConflictError('Такой e-mail уже зарегистрирован');
       } else {
         next(err);
       }
