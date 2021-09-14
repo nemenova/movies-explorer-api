@@ -3,14 +3,10 @@ const express = require('express');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
-const { Joi, celebrate, errors } = require('celebrate');
+const { errors } = require('celebrate');
 const cors = require('cors');
+const routers = require('./routes/index');
 const limiter = require('./middlewares/limiter');
-const userRoute = require('./routes/users');
-const movieRoute = require('./routes/movies');
-const { createUser, login, logout } = require('./controllers/users');
-const auth = require('./middlewares/auth');
-const NotFoundError = require('./errors/NotFoundError');
 const centralErrorHandler = require('./middlewares/centralErrorHandler');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
@@ -20,8 +16,7 @@ const app = express();
 app.use(cors({
   credentials: true,
   origin: [
-    'https://vnemenova.nomoredomains.rocks',
-    'http://vnemenova.nomoredomains.rocks',
+    // заготовка под фронт
     'https://localhost:3000',
     'http://localhost:3000',
   ],
@@ -38,36 +33,9 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(requestLogger);
-
-app.post('/signin', celebrate({
-  body: Joi.object().keys({
-    email: Joi.string().required().email(),
-    password: Joi.string().required().min(8),
-  }),
-}), login);
-
-app.post('/signup', celebrate({
-  body: Joi.object().keys({
-    email: Joi.string().required().email(),
-    password: Joi.string().required().min(8),
-    name: Joi.string().min(2).max(30),
-  }).unknown(true),
-}), createUser);
-
-app.use(auth);
-
-app.get('/signout', logout);
-
-app.use('/users', userRoute);
-app.use('/movies', movieRoute);
-app.use('*', () => {
-  throw new NotFoundError('Запрашиваемый ресурс не найден.');
-});
-
+app.use(routers);
 app.use(errorLogger);
-
 app.use(errors());
-
 app.use(centralErrorHandler);
 
 app.set('trust proxy', 1);
