@@ -35,12 +35,6 @@ module.exports.getUser = (req, res, next) => {
     .then((user) => {
       res.send(user);
     })
-    .catch((err) => {
-      if (err.name === 'CastError') {
-        throw new BadRequestError('Переданы некорректные данные');
-      }
-      next(err);
-    })
     .catch(next);
 };
 

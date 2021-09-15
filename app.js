@@ -9,6 +9,7 @@ const routers = require('./routes/index');
 const limiter = require('./middlewares/limiter');
 const centralErrorHandler = require('./middlewares/centralErrorHandler');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const { DEV_MONGO_URL } = require('./utils/dev-config');
 
 const { PORT = 3000 } = process.env;
 const app = express();
@@ -22,7 +23,7 @@ app.use(cors({
   ],
 }));
 
-mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
+mongoose.connect(DEV_MONGO_URL, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
