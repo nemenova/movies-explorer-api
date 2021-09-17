@@ -11,7 +11,7 @@ const centralErrorHandler = require('./middlewares/centralErrorHandler');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { DEV_MONGO_URL } = require('./utils/dev-config');
 
-const { PORT = 3000 } = process.env;
+const { PORT = 3000, NODE_ENV, MONGO_URL } = process.env;
 const app = express();
 
 app.use(cors({
@@ -23,7 +23,7 @@ app.use(cors({
   ],
 }));
 
-mongoose.connect(DEV_MONGO_URL, {
+mongoose.connect(NODE_ENV === 'production' ? MONGO_URL : DEV_MONGO_URL, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
