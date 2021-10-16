@@ -17,12 +17,14 @@ const app = express();
 app.use(cors({
   credentials: true,
   origin: [
-    // заготовка под фронт
+    'https://frontend.nemenova.nomoredomains.monster',
+    'http://frontend.nemenova.nomoredomains.monster',
     'https://localhost:3000',
     'http://localhost:3000',
+    'https://localhost:3001',
+    'http://localhost:3001',
   ],
 }));
-
 mongoose.connect(NODE_ENV === 'production' ? MONGO_URL : DEV_MONGO_URL, {
   useNewUrlParser: true,
   useCreateIndex: true,
