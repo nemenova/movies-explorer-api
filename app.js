@@ -17,7 +17,8 @@ const app = express();
 app.use(cors({
   credentials: true,
   origin: [
-    // заготовка под фронт
+    'https://frontend.nemenova.nomoredomains.monster',
+    'http://frontend.nemenova.nomoredomains.monster',
     'https://localhost:3000',
     'http://localhost:3000',
   ],
