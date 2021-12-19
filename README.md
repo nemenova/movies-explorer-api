@@ -24,5 +24,5 @@ validator
 rate limiter  
 
 deployed to 
-[here](https://backend.nemenova.nomoredomains.club "VM is stopped to save resourses")  
-BUT now VM is stopped to save resourses
+[here](https://backend.nemenova.nomoredomains.club "VM is located at Yandex.Cloud")  
+
